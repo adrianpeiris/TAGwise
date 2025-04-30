@@ -1,0 +1,94 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 03, 2025 at 05:38 PM
+-- Server version: 10.6.20-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `aibookmarkerdb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `content_details`
+--
+
+CREATE TABLE `content_details` (
+  `id` int(11) NOT NULL,
+  `url` varchar(2083) NOT NULL,
+  `title` text DEFAULT NULL,
+  `site_name` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `tags` text DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `favicon_url` varchar(2083) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `content_details`
+--
+
+INSERT INTO `content_details` (`id`, `url`, `title`, `site_name`, `category`, `tags`, `content`, `favicon_url`, `created_at`) VALUES
+(8, 'https://www.youtube.com/watch?v=PWir2iQSt9M', 'Lasagna Recipe Without Oven — So Easy, So Good!', 'youtube.com', 'Travel & Adventures', 'recipes,easy,food,recipe,cooking', 'lasagna recipe without oven so easy so good looking for an easy lasagna recipe without an oven you ve found it this no bake lasagna is packed with flavor made in just one pan and ready in no time perfect for a quick lunch or dinner this tasty pasta dish is ideal when you want something simple delicious and satisfying without turning on the oven we use layers of lasagna sheets a rich meat sauce and plenty of cheese to create a comforting classic with a twist whether you re into italian food home ...', 'https://www.youtube.com/favicon.ico', '2025-04-03 10:36:57'),
+(9, 'https://www.youtube.com/watch?v=IiFTZUXzJBw', 'I Accidentally Built Another App (And Learned A Lot)', 'youtube.com', 'Science & Learning', 'local,app,building,design,models', 'i accidentally built another app and learned a lot hi my name is chris and i build productivity apps mogul ellie luna and now lily in this video i talk about how i accidentally created an app over the weekend and the things i learned about local llms and other cool things lily waitlist my apps and socials hire cecilia for design timestamps 0 00 intro why i m making this video 0 39 why i built the app and what it is 2 01 exploring local ai models 3 04 building the local transcription feature 3 29...', 'https://www.youtube.com/favicon.ico', '2025-04-03 10:48:21'),
+(10, 'https://www.youtube.com/watch?v=tQgcXcNneqU', 'ROYAL CHALLENGERS BENGALURU VS GUJARAT TITANS IPL 2025 MATCH 14 HIGHLIGHTS | RCB VS GT HIGHLIGHTS', 'youtube.com', 'Sports', 'highlights,2025,match,cricket,today', 'royal challengers bengaluru vs gujarat titans ipl 2025 match 14 highlights rcb vs gt highlights royal challengers bengaluru vs gujarat titans ipl 2025 match highlights rcb vs gt highlights royal challengers bengaluru vs gujarat titans ipl t20 2025 9th match highlights rcb vs gt highlights full highlights royal challengers bengaluru vs gujarat titans ipl 2025 match highlights rcb vs gt highlights iplmatch ipl2025 crickethighlights iplhighlights highlights royal challengers bengaluru vs gujarat ti...', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:24:23'),
+(11, 'https://www.youtube.com/watch?v=lZaUC1MubAM', 'CSK vs RCB highlights ipl #ipl #ipl2024 #ipl2023 #ipl2025 #iplhighlights #msdhoni #ipl2022 #cricket', 'youtube.com', 'Sports', 'highlights,2024,match,may,cricket', 'csk vs rcb highlights ipl ipl ipl2024 ipl2023 ipl2025 iplhighlights msdhoni ipl2022 cricket rcb vs csk highlight ipl ipl ipl2024 ipl2023 ipl2025 iplhighlights viratkohli ipl2021 cricket highlights chennai cricket royal challengers bangalore ipl 2024 cricket highlights royal challengers bangalore cricket chennai vs bangalore ipl 2024 match highlights bangalore vs chennai csk vs rcb highlights rcb vs csk 68th match ipl 2024 highlights chennai vs bangalore 18 may 2024 chennai vs bangalore 18 may 20...', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:24:52'),
+(12, 'https://www.youtube.com/watch?v=4SKJ4RAaGLY', 'The New 2025 BMW iX – Walkaround', 'youtube.com', 'Autos & Vehicles', 'driving,new,digital,design,electric', 'the new 2025 bmw ix walkaround discover the future of electric mobility get to know the new bmw ix in detail explore the sporty and elegant updates in the design of the three new models bmw ix xdrive45 bmw ix xdrive60 bmw ix m70 xdrive electrifying performance charging comfort experience enhanced power and an extended driving range delivering unparalleled electric driving pleasure seamless digital innovation discover the latest bmw connecteddrive infotainment and connectivity features offering a...', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:26:01'),
+(13, 'https://www.youtube.com/watch?v=lkX5OXaeHsU', 'The BMW iX is Only Guilty of 1 Sin!', 'youtube.com', 'Autos & Vehicles', 'iphone,electric,mkbhd,rock,focus', 'the bmw ix is only guilty of 1 sin bmw s electric crossover suv is rock solid shot on iphone 14 pro bmw bmw ix xdrive xdive 50 mkbhd auto focus bmw ix review', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:26:22'),
+(14, 'https://www.youtube.com/watch?v=tjpNPWG8t00', 'Why Tesla Model Y Owner Switched To BMW iX', 'youtube.com', 'Autos & Vehicles', 'tesla,model,owners,france,vehicles', 'why tesla model y owner switched to bmw ix automotive reviews are fun to do but many times i learn more about vehicles by actually spending time with their owners this week on ev rider we re taking a ride in a 2023 bmw ix xdrive 50 owned by cory france who previously had a tesla model y bmw ix discount pricing ev rider website ev rider on facebook ev rider on instagram ev rider on twitter', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:26:52'),
+(15, 'https://www.youtube.com/watch?v=6tdEEsrZA94', '20 Small And Cute Exotic Animals You Can Own As Pets', 'youtube.com', 'Lifestyle & Pets', 'animals,animal,can,adorable,you', '20 small and cute exotic animals you can own as pets there s nothing quite as beautiful as having an animal companion to share your home with but for some people traditional pets such as dogs and cats don t just cut it instead they need something exotic while not all exotic animals are suitable as pets some of them can make wonderful companions if cared for properly in this video we will show you some of the cutest exotic animals that you can own as pets from fluffy hedgehogs to playful sugar gl...', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:27:18'),
+(16, 'https://www.youtube.com/watch?v=-9V5RHsjh9M', 'Top 10 Most Expensive Cat Breeds In The World', 'youtube.com', 'Lifestyle & Pets', 'cat,expensive,top,world,most', 'top 10 most expensive cat breeds in the world among the world s ten most expensive cats the bengal cat ranks only fourth while the cat at the top of the list is worth hundreds of thousands of dollars which reminds pet lovers to be extra cautious 00 00 start 00 26 russian blue cat 02 14 scottish fold cat 04 11 ragdoll cat 05 40 hairless cat 07 45 persian cat 09 17 sphynx cat 11 06 bengal cat 12 39 savannah cat 14 29 diamond eye cat 16 06 ashera cat', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:27:39'),
+(17, 'https://www.youtube.com/watch?v=PdlroR9sdRA', 'how to land your first engineering job out of university', 'youtube.com', 'Science & Learning', 'university,job,engineering,out,how', 'how to land your first engineering job out of university this is the story of how i got my first engineering job out of university and how you can too', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:28:12'),
+(19, 'https://techcrunch.com/2025/04/02/deepminds-145-page-paper-on-agi-safety-may-not-convince-skeptics/', 'DeepMind\'s 145-page paper on AGI safety may not convince skeptics | TechCrunch', 'techcrunch.com', 'Science & Learning', 'paper,result', 'html deepmind s 145 page paper on agi safety may not convince skeptics google deepmind on wednesday published an on its safety approach to agi roughly defined as ai that can accomplish any task a human can agi is a bit of a controversial subject in the ai field with suggesting that it s little more than a pipe dream others including warn that it s around the corner and could result in catastrophic harms if steps aren t taken to implement appropriate safeguards deepmind s 145 page document which ...', 'https://techcrunch.com/favicon.ico', '2025-04-03 11:29:23'),
+(20, 'https://www.whitehouse.gov/fact-sheets/2025/04/fact-sheet-president-donald-j-trump-declares-national-emergency-to-increase-our-competitive-edge-protect-our-sovereignty-and-strengthen-our-national-and-economic-security/', 'Fact Sheet: President Donald J. Trump Declares National Emergency to Increase our Competitive Edge, Protect our Sovereignty, and Strengthen our National and Economic Security – The White House', 'whitehouse.gov', 'News & Politics', 'trump,national,economic,president,workers', 'html fact sheet president donald j trump declares national emergency to increase our competitive edge protect our sovereignty and strengthen our national and economic security the white house today president donald j trump declared that foreign trade and economic practices have created a national emergency and his order imposes responsive tariffs to strengthen the international economic position of the united states and protect american workers president trump refuses to let the united states be...', 'https://www.whitehouse.gov/favicon.ico', '2025-04-03 11:31:08'),
+(22, 'https://www.bbc.com/news/articles/c75dl7rdxexo', 'Nobel Peace Prize winner Oscar Arias says US cancelled his visa', 'bbc.com', 'News & Politics', 'president,decision,chinese,china', 'html us cancels visa of nobel peace prize winner oscar arias vanessa buschschlüter bbc news epa the former president of costa rica oscar arias says his us visa has been revoked arias a nobel laureate said he was informed of the decision weeks after he had publicly criticised donald trump comparing the behaviour of the us president to that of a roman emperor the 84 year old who was awarded the nobel peace prize for his role in brokering an end to conflicts in central america said us authorities h...', 'https://www.bbc.com/favicon.ico', '2025-04-03 11:37:04'),
+(23, 'https://www.bbc.com/culture/article/20250326-why-the-quaint-paintings-of-thomas-kinkade-divided-the-us', '\'Banal and hollow\': Why the quaint paintings of Thomas Kinkade divided the US', 'bbc.com', 'Entertainment & Media', 'art', 'html banal and hollow why the quaint paintings of thomas kinkade divided the us nicholas barber thomas kinkade was one of the best selling artists in history as well as one of the most divisive when he died in 2012 the american painter had been rocked by business problems but at his commercial peak a decade earlier his company was bringing in more than and yet his work was despised by many critics not because it was blasphemous or obscene but because well he specialised in quaint pictures of tha...', 'https://www.bbc.com/favicon.ico', '2025-04-03 11:39:26'),
+(24, 'https://www.bbc.com/travel/article/20250115-the-25-best-places-to-travel-in-2025', 'The 25 best places to travel in 2025', 'bbc.com', 'Travel & Adventures', '2025', 'html the 25 best places to travel in 2025 bbc travel getty images travel has the power to connect inspire and even transform us peering over the edge of a crashing waterfall in newfoundland and ascending sawtooth spires in the italian dolomites reveal how wondrous the world can be but while travel should be a force for good the past year has reminded us that it also has the potential to overwhelm and even harm the places we love and many destinations are now imposing new restrictions as they gra...', 'https://www.bbc.com/favicon.ico', '2025-04-03 11:40:08'),
+(25, 'https://www.hollywoodreporter.com/movies/movie-news/celebrity-selfie-cinemacon-hemsworth-pratt-affleck-garfield-1236180399/', 'Chris Hemsworth, Chris Pratt, Ryan Gosling and Ben Affleck Take Epic Selfie', 'hollywoodreporter.com', 'Entertainment & Media', 'chris,harris,stage,ryan,studios', 'html bart layton chris hemsworth halle berry chris pratt timur bekmambetov cynthia addai robinson jon bernthal daniella pineda gavin o connor ben affleck vivica a fox aleshea harris ayo edebiri mallori johnson luca guadagnino chris miller phil lord ryan gosling and andrew garfield pose onstage during the amazon mgm studios presentation at cinemacon at the colosseum inside caesars palace in las vegas on april 2 2025 how do you close an inaugural presentation featuring some of hollywood s biggest ...', 'https://www.hollywoodreporter.com/favicon.ico', '2025-04-03 11:41:27'),
+(26, 'https://www.hollywoodreporter.com/lifestyle/shopping/disney-mickey-and-friends-aeropostale-collab-release-date-pricing-where-to-buy-1236178354/', 'Aéropostale x Disney Mickey & Friends Clothing Collection 2025 Release', 'hollywoodreporter.com', 'Lifestyle & Pets', 'friends,disney,2025,april,range', 'html if you purchase an independently reviewed product or service through a link on our website the hollywood reporter may receive an affiliate commission between kendra scott s lilly pulitzer s vibrant stoney clover lane s and lucky brand s vintage inspired magic continues making its mark on the world in 2025 and as of april 1 another clothing and accessories retailer has joined the lineup is officially live and available in stores beginning april 2 the blends disney nostalgia with aéropostale ...', 'https://www.hollywoodreporter.com/favicon.ico', '2025-04-03 11:42:17'),
+(27, 'https://www.youtube.com/watch?v=wyqMVtF86Jk', '✨ GENIUS MINI CRAFTS YOU CAN MAKE AT HOME! 🧷💡 Easy DIY Ideas for Everyone 🎨💖', 'youtube.com', 'Howto & Style', 'diy,crafts,mini,minute,craft', 'genius mini crafts you can make at home easy diy ideas for everyone looking for fun and easy diy projects in this video we ll show you how to make genius mini crafts using simple materials you already have at home perfect for kids teens or anyone who loves getting creative these quick craft ideas are budget friendly adorable and super fun to try from mini decor hacks to clever handmade gifts there s something for everyone don t miss out on these awesome diy tricks subscribe for more creative ide...', 'https://www.youtube.com/favicon.ico', '2025-04-03 11:43:35'),
+(28, 'https://www.reddit.com/r/NewTubers/comments/18m6lra/whats_the_difference_between_howto_style_vs/', 'What\'s the difference between Howto & Style VS. Education?', 'reddit.com', 'Science & Learning', 'difference between,education,style', 'what s the difference between howto style vs education what s the difference between howto style vs education', 'https://www.reddit.com/favicon.ico', '2025-04-03 11:44:37'),
+(29, 'https://www.oneofastyle.com/one-of-a-style/how-to-transition-your-wardrobe-from-winter-to-spring', 'HOW TO TRANSITION YOUR WARDROBE FROM WINTER TO SPRING | PERSONAL STYLIST TIPS - One Of A Style', 'oneofastyle.com', 'Howto & Style', 'winter,weather,still,also,time', 'html personal stylist tips how to transition your wardrobe from winter to spring with ease mar 4 written by as the weather warms and the days lengthen it s time to refresh your wardrobe and make the transition from winter to spring layering is key during this seasonal change and the right clothing can help you stay stylish comfortable and prepared for unpredictable weather start with lighter layers while winter clothes often focus on heavy materials like wool and fleece spring calls for lighter ...', 'https://images.squarespace-cdn.com/content/v1/566c0890a12f444cd6d11a06/c3265d25-c5a3-42fc-b5ad-c3b3155da4ec/favicon.ico?format=100w', '2025-04-03 11:45:00'),
+(30, 'https://www.reddit.com/r/technology/comments/1jnl64l/fbi_raids_home_of_prominent_computer_scientist/', 'FBI raids home of prominent computer scientist whose professor profile has disappeared from Indiana University — “He’s been missing for two weeks and his students can’t reach him”: fellow professor', 'reddit.com', 'News & Politics', 'professor,missing,weeks,scientist,reach', 'fbi raids home of prominent computer scientist whose professor profile has disappeared from indiana university he s been missing for two weeks and his students can t reach him fellow professor', 'https://www.reddit.com/favicon.ico', '2025-04-03 11:47:16'),
+(31, 'https://www.reddit.com/r/NewTubers/comments/1jqfqt4/am_i_just_lucky_or_is_there_an_explanation_for/', 'Am I just lucky or is there an explanation for this ?', 'reddit.com', 'Entertainment & Media', 'just,second,content', 'am i just lucky or is there an explanation for this i just started my channel a little over 15 days ago in the gaming niche more specifically storytelling my content is in french there are english subtitles but i haven t had the time yet to fix them for the second video the one about halo the channel username is sublimestorytv or just sublime story with a yellow s as avatar i ve posted my second video so far and i ve just reached the following stats 45k total views 4 100 watch hours 1 800 subscr...', 'https://www.reddit.com/favicon.ico', '2025-04-03 11:50:39'),
+(32, 'https://www.reddit.com/r/selfimprovement/comments/1jprkbq/stopped_drinking_and_smoking_cannabis_and_i_dont/', 'Stopped drinking and smoking cannabis and I don\'t feel any better.', 'reddit.com', 'Entertainment & Media', 'better,feeling,myself,things,instead', 'stopped drinking and smoking cannabis and i don t feel any better i 32m smoked pot and drank something like 4 6 beers daily for the better part of a decade pretty much the entirety of my 20s i also use nicotine vape after smoking cigs for 5 years until i was about 23 over 2024 i tapered myself off the beers was down to only 2 a night and stopped completely at the beginning of this year i also stopped smoking weed in november so i m nearly half a year off pot and 3 months of no alcohol while i m ...', 'https://www.reddit.com/favicon.ico', '2025-04-03 11:51:12');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `content_details`
+--
+ALTER TABLE `content_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `content_details`
+--
+ALTER TABLE `content_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

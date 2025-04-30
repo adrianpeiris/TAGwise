@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --primary: #fc5e38;
+            --secondary: black;
+            --light: white;
+            --dark: black;
+            --background: #f4f4f4;
+            --card-bg: white;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: var(--background);
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px; /* Increased width */
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid var(--primary);
+            color: var(--dark);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            margin: 0 0 1rem;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .card p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: gray;
+        }
+
+        .card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .card .tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+            color: var(--secondary);
+        }
+
+        .add-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            text-decoration: none;
+            color: var(--light);
+            background: var(--primary);
+            border: 2px solid var(--primary); /* Added border */
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+
+        .add-link:hover {
+            opacity: 0.9;
+            transform: scale(1.05); /* Added hover animation */
+            background: var(--secondary);
+            color: var(--light);
+        }
+
+        .small-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .small-card {
+            background: var(--card-bg);
+            padding: 0.8rem;
+            border-radius: 5px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        .small-card img {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .small-card .name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .small-card .count {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="header">
+            <h1>📊 TAGwise Dashboard</h1>
+            <p>Overview of categories, links, and trends</p>
+        </div>
+
+        <!-- Categories Grid -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+            {% for category in categories %}
+            <a href="/explore?category={{ category.category|urlencode }}" style="text-decoration: none; color: inherit;">
+                <div class="card" style="text-align: center;">
+                    <h3>{{ category.category }}</h3>
+                    <span>{{ category.link_count }} Links</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Responsive Cards for Links -->
+        <div class="card-grid">
+            {% for link in links %}
+            <div class="card">
+                <h3>{{ link.site_name }}</h3>
+                <p><strong>Title:</strong> {{ link.title }}</p>
+                <p><strong>Category:</strong> {{ link.category }}</p>
+                <div class="tags">
+                    {% for tag in link.tags.split(',') %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                <a href="{{ link.url }}" target="_blank">Visit Website</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Bar Chart -->
+        <div style="margin-top: 2rem;">
+            <canvas id="categoryChart"></canvas>
+        </div>
+
+        <!-- Top 5 Websites -->
+        <div style="margin-top: 2rem;">
+            <h2>Top 5 Websites</h2>
+            <div class="small-card-grid">
+                {% for site in top_websites %}
+                <a href="/explore?search={{ site.site_name|urlencode }}" style="text-decoration: none; color: inherit;">
+                    <div class="small-card">
+                        <div class="name">
+                            <img src="{{ site.favicon_url }}" alt="Favicon">
+                            {{ site.site_name }}
+                        </div>
+                        <div class="count">{{ site.site_count }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Top 5 Tags -->
+        <div style="margin-top: 2rem;">
+            <h2>Top 5 Tags</h2>
+            <div class="small-card-grid">
+                {% for tag in top_tags %}
+                <a href="/explore?search={{ tag.tag|urlencode }}" style="text-decoration: none; color: inherit;">
+                    <div class="small-card">
+                        <div class="name">{{ tag.tag }}</div>
+                        <div class="count">{{ tag.tag_count }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for category in categories %}'{{ category.category|safe }}',{% endfor %}],
+                datasets: [{
+                    label: 'Number of Links',
+                    data: [{% for category in categories %}{{ category.link_count }},{% endfor %}],
+                    backgroundColor: [
+                        'rgba(52, 152, 219, 0.5)', // Blue
+                        'rgba(231, 76, 60, 0.5)',  // Red
+                        'rgba(46, 204, 113, 0.5)', // Green
+                        'rgba(241, 196, 15, 0.5)', // Yellow
+                        'rgba(155, 89, 182, 0.5)', // Purple
+                        'rgba(52, 73, 94, 0.5)',   // Dark Gray
+                        'rgba(230, 126, 34, 0.5)', // Orange
+                        'rgba(26, 188, 156, 0.5)'  // Teal
+                    ],
+                    borderColor: [
+                        'rgba(52, 152, 219, 1)', 
+                        'rgba(231, 76, 60, 1)',  
+                        'rgba(46, 204, 113, 1)', 
+                        'rgba(241, 196, 15, 1)', 
+                        'rgba(155, 89, 182, 1)', 
+                        'rgba(52, 73, 94, 1)',   
+                        'rgba(230, 126, 34, 1)', 
+                        'rgba(26, 188, 156, 1)'  
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

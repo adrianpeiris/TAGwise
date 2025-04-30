@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Link</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px; /* Increased width */
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            background: var(--secondary);
+            color: white;
+            border: 2px solid var(--secondary); /* Added border */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: scale(1.05); /* Added hover animation */
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group select {
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid var(--primary);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .tag button:hover {
+            color: #e74c3c;
+        }
+
+        .add-tag-input {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-tag-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+        }
+
+        .add-tag-input button {
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-tag-input button:hover {
+            background: var(--primary);
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 4s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            10%, 90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <h1>Update Link - TAGwise</h1>
+        <form method="POST" action="/update">
+            <input type="hidden" name="link_id" value="{{ link.id }}">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="{{ link.title }}" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Entertainment & Media" {% if link.category == "Entertainment & Media" %}selected{% endif %}>Entertainment & Media</option>
+                    <option value="Science & Learning" {% if link.category == "Science & Learning" %}selected{% endif %}>Science & Learning</option>
+                    <option value="News & Politics" {% if link.category == "News & Politics" %}selected{% endif %}>News & Politics</option>
+                    <option value="Howto & Style" {% if link.category == "Howto & Style" %}selected{% endif %}>Howto & Style</option>
+                    <option value="Sports" {% if link.category == "Sports" %}selected{% endif %}>Sports</option>
+                    <option value="Autos & Vehicles" {% if link.category == "Autos & Vehicles" %}selected{% endif %}>Autos & Vehicles</option>
+                    <option value="Lifestyle & Pets" {% if link.category == "Lifestyle & Pets" %}selected{% endif %}>Lifestyle & Pets</option>
+                    <option value="Travel & Adventures" {% if link.category == "Travel & Adventures" %}selected{% endif %}>Travel & Adventures</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <div class="tags-container" id="tagsContainer">
+                    {% for tag in link.tags.split(',') %}
+                    <div class="tag">
+                        {{ tag }}
+                        <button type="button" onclick="removeTag('{{ tag }}')">✕</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="add-tag-input">
+                    <input type="text" id="newTagInput" placeholder="Add a new tag">
+                    <button type="button" onclick="addTag()">Add Tag</button>
+                </div>
+                <input type="hidden" id="tagsInput" name="tags" value="{{ link.tags }}">
+            </div>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    <div id="popup" class="popup"></div>
+    <script>
+        function removeTag(tag) {
+            const tagsInput = document.getElementById('tagsInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const currentTags = tagsInput.value.split(',');
+            const updatedTags = currentTags.filter(t => t !== tag);
+            tagsInput.value = updatedTags.join(',');
+            tagsContainer.innerHTML = updatedTags.map(t => `
+                <div class="tag">
+                    ${t}
+                    <button type="button" onclick="removeTag('${t}')">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function addTag() {
+            const newTagInput = document.getElementById('newTagInput');
+            const tagsInput = document.getElementById('tagsInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const newTag = newTagInput.value.trim();
+            if (newTag && !tagsInput.value.split(',').includes(newTag)) {
+                const currentTags = tagsInput.value ? tagsInput.value.split(',') : [];
+                currentTags.push(newTag);
+                tagsInput.value = currentTags.join(',');
+                tagsContainer.innerHTML += `
+                    <div class="tag">
+                        ${newTag}
+                        <button type="button" onclick="removeTag('${newTag}')">✕</button>
+                    </div>
+                `;
+                newTagInput.value = '';
+            }
+        }
+
+        function showPopup(message, isError = false) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.background = isError ? '#e74c3c' : 'var(--secondary)';
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

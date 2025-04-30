@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <title>Bookmark Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #fc5e38;
+            text-align: center;
+        }
+        .detail {
+            margin-bottom: 1rem;
+        }
+        .detail span {
+            font-weight: bold;
+            color: #fc5e38;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .tag {
+            background: #f0f0f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .card-icons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .card-icons a, .card-icons form button {
+            background: var(--primary, #fc5e38);
+            border: none;
+            cursor: pointer;
+            color: var(--light, white);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+        .card-icons a:hover, .card-icons form button:hover {
+            transform: scale(1.2);
+            background-color: var(--secondary, black);
+            color: var(--light, white);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .card-icons .delete-icon {
+            background: #fdecea;
+            color: #e74c3c;
+        }
+        .card-icons .delete-icon:hover {
+            background: #e74c3c;
+            color: white;
+        }
+        .card-icons .update-icon {
+            background: #fff4e6;
+            color: #f39c12;
+        }
+        .card-icons .update-icon:hover {
+            background: #f39c12;
+            color: white;
+        }
+        .card-icons .visit-icon {
+            background: #eaf6ff;
+            color: var(--secondary, black);
+        }
+        .card-icons .visit-icon:hover {
+            background: var(--secondary, black);
+            color: white;
+        }
+        .back-button {
+            display: block;
+            margin: 2rem auto;
+            text-align: center;
+            padding: 0.8rem 2rem;
+            background: #fc5e38;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .back-button:hover {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bookmark Details</h1>
+        <div class="detail"><span>Title:</span> {{ link.title }}</div>
+        <div class="detail"><span>Category:</span> {{ link.category }}</div>
+        <div class="detail"><span>Site Name:</span> {{ link.site_name }}</div>
+        <div class="detail"><span>URL:</span> <a href="{{ link.url }}" target="_blank">{{ link.url }}</a></div>
+        <div class="detail"><span>Tags:</span>
+            <div class="tags">
+                {% for tag in link.tags.split(',') %}
+                <div class="tag">{{ tag }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="detail"><span>Content:</span> <p>{{ link.content }}</p></div>
+        <div class="card-icons">
+            <a href="{{ link.url }}" target="_blank" title="Visit" class="visit-icon">
+                <span class="material-symbols-outlined">link</span>
+            </a>
+            <form method="GET" action="/update" style="display: inline;">
+                <input type="hidden" name="link_id" value="{{ link.id }}">
+                <button type="submit" title="Update" class="update-icon">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+            </form>
+            <form method="POST" action="/delete" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this bookmark?');">
+                <input type="hidden" name="link_id" value="{{ link.id }}">
+                <button type="submit" title="Delete" class="delete-icon">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </form>
+        </div>
+        <a href="/explore" class="back-button">Back to Explore</a>
+    </div>
+</body>
+</html>

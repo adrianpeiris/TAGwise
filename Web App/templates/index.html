@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Link</title>
+    <style>
+        :root {
+            --primary: #fc5e38; /* Updated primary color */
+            --secondary: black; /* Updated secondary color */
+            --light: white;
+            --dark: black;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px; /* Increased width */
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .analyzer-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        input[type="url"] {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            background: var(--secondary); /* Changed to black */
+            color: white;
+            border: 2px solid var(--secondary); /* Changed to black */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: scale(1.05); /* Added hover animation */
+            background: var(--primary); /* Changed hover to primary color */
+        }
+
+        .result-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+            word-wrap: break-word; /* Break long words if necessary */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent content overflow */
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%; /* Ensure it stays within the card */
+            word-wrap: break-word; /* Break long words if necessary */
+        }
+
+        .site-name {
+            font-size: 0.9rem;
+            color: gray;
+            margin-bottom: 1rem;
+        }
+
+        .site-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .favicon {
+            width: 40px; /* Explicit width */
+            height: 40px; /* Explicit height */
+            object-fit: contain; /* Ensure the image fits without distortion */
+            image-rendering: -webkit-optimize-contrast; /* Optimize for sharpness */
+            image-rendering: crisp-edges; /* For modern browsers */
+            image-rendering: pixelated; /* For fallback */
+        }
+
+        .category {
+            background: var(--secondary); /* Changed to black */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .content {
+            font-size: 1rem;
+            line-height: 1.5;
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .preview-text {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .error {
+            color: #e74c3c;
+            padding: 1rem;
+            background: #f8d7da;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .prediction-results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-results h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .prediction-results .category {
+            display: inline-block;
+            background: var(--secondary); /* Changed to black */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .prediction-results .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .prediction-results .tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .editable-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .editable-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .editable-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .editable-section select, .editable-section input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            font-size: 1rem;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .editable-section select:focus, .editable-section input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .editable-section .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .editable-section .tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .editable-section .tag button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .editable-section .tag button:hover {
+            color: #e74c3c;
+        }
+
+        .editable-section .add-tag-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .editable-section .add-tag-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+        }
+
+        .editable-section .add-tag-input button {
+            padding: 0.5rem 1rem;
+            background: var(--secondary); /* Changed to black */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .editable-section .add-tag-input button:hover {
+            background: var(--primary); /* Changed hover to primary color */
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary); /* Changed to black */
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            animation: fadeInOut 4s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            10%, 90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="header">
+            <h1>➕ Add New Link</h1>
+            <p>Welcome to TAGwise! Enter a URL to analyze and save.</p>
+        </div>
+
+        <div class="analyzer-form">
+            <div class="input-group">
+                <input type="url" id="urlInput" 
+                       placeholder="Enter website URL (e.g., https://example.com)" 
+                       required>
+                <button onclick="analyzeContent()">Analyze</button>
+            </div>
+            <div id="errorMessage" class="error" style="display: none;"></div> <!-- Restored error message area -->
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            Analyzing content...
+        </div>
+
+        <div id="results" class="result-card" style="display: none;">
+            <div class="site-info">
+                <img id="favicon" class="favicon" alt="Site favicon">
+                <div>
+                    <div class="title" id="title"></div>
+                    <div class="site-name" id="siteName"></div>
+                </div>
+            </div>
+
+            <div class="editable-section">
+                <h3>Edit Predicted Category</h3>
+                <label for="categorySelect">Category:</label>
+                <select id="categorySelect">
+                    <option value="Entertainment & Media">Entertainment & Media</option>
+                    <option value="Science & Learning">Science & Learning</option>
+                    <option value="News & Politics">News & Politics</option>
+                    <option value="Howto & Style">Howto & Style</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Autos & Vehicles">Autos & Vehicles</option>
+                    <option value="Lifestyle & Pets">Lifestyle & Pets</option>
+                    <option value="Travel & Adventures">Travel & Adventures</option>
+                </select>
+
+                <h3>Edit Predicted Tags</h3>
+                <div class="tags-container" id="tagsContainer">
+                    <!-- Tags will be dynamically added here -->
+                </div>
+                <div class="add-tag-input">
+                    <input type="text" id="newTagInput" placeholder="Add a new tag">
+                    <button type="button" onclick="addTag()">Add Tag</button>
+                </div>
+                <input type="hidden" id="tagsInput" name="tags">
+            </div>
+
+            <div>
+                <a id="visitLink" href="#" target="_blank" style="color: var(--secondary); text-decoration: none;"></a>
+            </div>
+            
+            <h3>Content:</h3>
+            <div class="content" id="content"></div>
+
+            <button id="saveButton" onclick="saveContent()">Save</button>
+        </div>
+    </div>
+
+    <div id="popup" class="popup"></div>
+
+    <script>
+        async function analyzeContent() {
+            const urlInput = document.getElementById('urlInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const results = document.getElementById('results');
+            const loading = document.getElementById('loading');
+            
+            // Reset UI
+            errorMessage.style.display = 'none';
+            results.style.display = 'none';
+            loading.style.display = 'block';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url: urlInput.value })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    updateResults(data);
+                    results.style.display = 'block';
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+            } catch (error) {
+                errorMessage.textContent = `Error: ${error.message}`;
+                errorMessage.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function updateResults(data) {
+            // Update favicon
+            const faviconElement = document.getElementById('favicon');
+            faviconElement.src = data.favicon_url || 'default-icon.png';
+
+            // Update title
+            const titleElement = document.getElementById('title');
+            titleElement.textContent = data.title.length > 100 
+                ? data.title.substring(0, 100) + '...' 
+                : data.title;
+
+            // Update site name
+            const siteNameElement = document.getElementById('siteName');
+            siteNameElement.textContent = data.site_name;
+
+            // Update category select
+            const categorySelect = document.getElementById('categorySelect');
+            categorySelect.value = data.category;
+
+            // Update tags
+            const tagsContainer = document.getElementById('tagsContainer');
+            const tagsInput = document.getElementById('tagsInput');
+            tagsContainer.innerHTML = '';
+            tagsInput.value = data.tags.join(',');
+            data.tags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `${tag} <button type="button" onclick="removeTag('${tag}')">✕</button>`;
+                tagsContainer.appendChild(tagElement);
+            });
+
+            // Update visit link
+            const visitLink = document.getElementById('visitLink');
+            visitLink.href = data.url;
+            visitLink.textContent = "Visit";
+
+            // Update content
+            const contentElement = document.getElementById('content');
+            contentElement.textContent = data.content.length > 1000 
+                ? data.content.substring(0, 1000) + '...' 
+                : data.content;
+        }
+
+        function showPopup(message, isError = false) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.style.background = isError ? '#e74c3c' : 'var(--secondary)';
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 4000);
+        }
+
+        async function saveContent() {
+            const results = {
+                url: document.getElementById('urlInput').value,
+                title: document.getElementById('title').textContent,
+                site_name: document.getElementById('siteName').textContent,
+                category: document.getElementById('categorySelect').value,
+                tags: document.getElementById('tagsInput').value.split(',').map(tag => tag.trim()),
+                content: document.getElementById('content').textContent,
+                favicon_url: document.getElementById('favicon').src
+            };
+
+            try {
+                const response = await fetch('/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(results)
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'duplicate') {
+                    showPopup(data.message, true); // Notify user about duplicate link
+                } else if (data.status === 'success') {
+                    showPopup(data.message || 'Content saved successfully');
+                    setTimeout(() => {
+                        window.location.href = '/explore'; // Redirect to Explore page
+                    }, 2000); // Wait for 2 seconds before redirecting
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+            } catch (error) {
+                showPopup(`Error: ${error.message}`, true);
+            }
+        }
+
+        function addTag() {
+            const newTagInput = document.getElementById('newTagInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const tagsInput = document.getElementById('tagsInput');
+            const newTag = newTagInput.value.trim();
+
+            if (newTag) {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `${newTag} <button type="button" onclick="removeTag('${newTag}')">✕</button>`;
+                tagsContainer.appendChild(tagElement);
+
+                const currentTags = tagsInput.value ? tagsInput.value.split(',') : [];
+                currentTags.push(newTag);
+                tagsInput.value = currentTags.join(',');
+
+                newTagInput.value = '';
+            }
+        }
+
+        function removeTag(tag) {
+            const tagsContainer = document.getElementById('tagsContainer');
+            const tagsInput = document.getElementById('tagsInput');
+            const currentTags = tagsInput.value.split(',').filter(t => t !== tag);
+
+            tagsInput.value = currentTags.join(',');
+            tagsContainer.innerHTML = '';
+            currentTags.forEach(t => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `${t} <button type="button" onclick="removeTag('${t}')">✕</button>`;
+                tagsContainer.appendChild(tagElement);
+            });
+        }
+
+        // Handle Enter key in input
+        document.getElementById('urlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                analyzeContent();
+            }
+        });
+    </script>
+</body>
+</html>
