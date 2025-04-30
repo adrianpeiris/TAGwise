@@ -104,9 +104,3 @@ We evaluated the model using **Accuracy, Precision, Recall, and F1-Score**.
 
 ---
 
-This **README** now has:
-- Clear **installation** and **usage instructions**.
-- **Key features** and **model performance** for easy reference.
-- **Testing examples** to engage users quickly.
-
-Let me know if you need more changes! 🚀
