@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAGwise</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="width: 400px; height: 600px;">
+    <div class="container">
+        <div class="header">
+            <h1>➕ Add New Link</h1>
+            <p>Analyze and save the current tab's URL.</p>
+        </div>
+
+        <div class="analyzer-form">
+            <div class="input-group">
+                <input type="url" id="urlInput" placeholder="URL will appear here" readonly>
+                <button id="analyzeButton">Analyze</button>
+            </div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            Analyzing content...
+        </div>
+
+        <div id="results" class="result-card" style="display: none;">
+            <div class="site-info">
+                <img id="favicon" class="favicon" alt="Site favicon">
+                <div>
+                    <div class="title" id="title"></div>
+                    <div class="site-name" id="siteName"></div>
+                </div>
+            </div>
+
+            <div class="editable-section">
+                <h3>Edit Predicted Category</h3>
+                <label for="categorySelect">Category:</label>
+                <select id="categorySelect">
+                    <option value="Entertainment & Media">Entertainment & Media</option>
+                    <option value="Science & Learning">Science & Learning</option>
+                    <option value="News & Politics">News & Politics</option>
+                    <option value="Howto & Style">Howto & Style</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Autos & Vehicles">Autos & Vehicles</option>
+                    <option value="Lifestyle & Pets">Lifestyle & Pets</option>
+                    <option value="Travel & Adventures">Travel & Adventures</option>
+                </select>
+
+                <h3>Edit Predicted Tags</h3>
+                <div class="tags-container" id="tagsContainer"></div>
+                <div class="add-tag-input">
+                    <input type="text" id="newTagInput" placeholder="Add a new tag">
+                    <button type="button" id="addTagButton">Add Tag</button>
+                </div>
+                <input type="hidden" id="tagsInput" name="tags">
+            </div>
+
+            <div>
+                <a id="visitLink" href="#" target="_blank" style="color: var(--secondary); text-decoration: none;"></a>
+            </div>
+            
+            <h3>Content:</h3>
+            <div class="content" id="content"></div>
+
+            <button id="saveButton">Save</button>
+            <button id="exploreButton">Explore All Bookmark</button>
+        </div>
+    </div>
+
+    <div id="popup" class="popup"></div>
+    <script src="popup.js"></script>
+</body>
+</html>
